@@ -5,8 +5,3 @@
 
 - include: mariadb_services.yml
 
-# - include: mongod_replicaset_init.yml
-
-# - include: mongod_create_admin.yml
-
-# - include: mongod_replicaset_add.yml

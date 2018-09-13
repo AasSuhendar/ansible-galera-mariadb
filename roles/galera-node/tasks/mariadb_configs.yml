@@ -8,6 +8,6 @@
     mode: 0644
 
 - name: Intiate MariaDB Galera Node Superuser
-  shell: sudo galera_new_cluster
+  shell: galera_new_cluster
   when:
     - primary

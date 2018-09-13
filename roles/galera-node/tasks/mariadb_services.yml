@@ -20,6 +20,7 @@
     enabled: yes
     state: restarted
   when:
+    - primary == 'false'
     - mysql_service_info.stdout.find("not-found") == -1
 
 - name: Wait For MariaDB Node Service

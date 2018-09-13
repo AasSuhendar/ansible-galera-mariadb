@@ -7,16 +7,20 @@
     - service_init_status.stat.islnk
 
 - name: Get MariaDB Node Service Info
-  shell: service mariadb status | grep not-found || true
+  shell: service mysql status | grep not-found || true
   args:
     warn: false
   register: mariadb_service_info
   when:
     - service_init_status.stat.exists
 
+- name: Debug service
+  debug: 
+    msg: "This is debug from service : {{ service_init_status }}"
+
 - name: Disable MariaDB Node Service
   service:
-    name: mariadb
+    name: mysql
     enabled: no
     state: stopped
   when:
