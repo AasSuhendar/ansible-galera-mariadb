@@ -1,0 +1,32 @@
+---
+- include: facts.yml
+
+- include: mariadb_services.yml
+
+# - include: mongo_files.yml
+
+# - include: mongo_keys.yml
+
+# - include: mongo_dirs_childs.yml
+
+# - include: mongo_dirs_parents.yml
+
+- include: mariadb_packages.yml
+  # when:
+  #   - full_uninstall
+
+# - include: mongo_users.yml
+#   when:
+#     - full_uninstall
+
+# - include: zfs_mounts.yml
+#   when:
+#     - full_uninstall
+#     - zfs_backend
+#     - inventory_hostname in groups['nodes']
+
+# - include: zfs_blocks.yml
+#   when:
+#     - full_uninstall
+#     - zfs_backend
+#     - inventory_hostname in groups['nodes']

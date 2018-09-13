@@ -1,0 +1,9 @@
+---
+- name: Mount ZFS Dataset to MongoDB Directory
+  mount:
+    path: /var/lib/mariadb
+    src: "/dev/zvol/{{ zfs_pool_name }}/mariadb"
+    fstype: xfs
+    opts: defaults
+    passno: 2
+    state: mounted

@@ -1,0 +1,12 @@
+[all:vars]
+mariadb_distribution=mariadb-server
+mariadb_admin_password=admin
+
+[haproxy]
+192.168.56.23
+192.168.56.24
+
+[nodes]
+192.168.56.25 primary=true
+192.168.56.26
+192.168.56.27

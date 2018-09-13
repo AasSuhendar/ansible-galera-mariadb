@@ -1,0 +1,37 @@
+---
+- include: facts.yml
+
+- include: os_packages.yml
+
+# - include: python_packages.yml
+
+- include: zfs_packages.yml
+  when:
+    - zfs_backend
+    - inventory_hostname in groups['nodes']
+
+- include: zfs_blocks.yml
+  when:
+    - zfs_backend
+    - inventory_hostname in groups['nodes']
+
+- include: zfs_mounts.yml
+  when:
+    - zfs_backend
+    - inventory_hostname in groups['nodes']
+
+- include: mariadb_packages.yml
+  when:
+    - inventory_hostname in groups['nodes']
+
+- include: mariadb_services.yml
+  when:
+    - inventory_hostname in groups['nodes']
+
+# - include: mongo_files.yml
+
+# - include: mongo_dirs_parents.yml
+
+# - include: mongo_dirs_childs.yml
+
+# - include: mongo_keys.yml

@@ -1,0 +1,28 @@
+---
+- name: Uninstall MariaDB Packages (MariaDB)
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    autoremove: yes
+    autoclean: yes
+    purge: yes
+    state: absent
+  with_items:
+    - rsync
+    - mariadb-server
+  when:
+    - mariadb_distribution == 'mariadb-server'
+
+# - name: Uninstall MariaDB Repository (MariaDB)
+#   file:
+#     path: "/etc/apt/sources.list.d/mongodb-org-{{ mongo_version_major }}.{{ mongo_version_minor }}.list"
+#     state: absent
+#   when:
+#     - mariadb_distribution == 'mariadb-server'
+
+# - name: Uninstall MariaDB Keyring (MariaDB)
+#   apt_key:
+#     id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+#     state: absent
+#   when:
+#     - mariadb_distribution == 'mariadb-server'
