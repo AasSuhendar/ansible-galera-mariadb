@@ -1,30 +1,30 @@
 ---
-- name: Reload MongoDB Service
+- name: Reload MariaDB Service
   systemd:
     daemon_reload: yes
   when:
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
-- name: Get MongoDB Node Service Info
-  shell: service mongod status | grep not-found || true
+- name: Get MariaDB Node Service Info
+  shell: service mysql status | grep not-found || true
   args:
     warn: false
-  register: mongod_service_info
+  register: mysql_service_info
   when:
     - service_init_status.stat.exists
 
-- name: Enable MongoDB Node Service
+- name: Enable MariaDB Node Service
   service:
-    name: mongod
+    name: mysql
     enabled: yes
     state: restarted
   when:
-    - mongod_service_info.stdout.find("not-found") == -1
+    - mysql_service_info.stdout.find("not-found") == -1
 
-- name: Wait For MongoDB Node Service
+- name: Wait For MariaDB Node Service
   wait_for:
-    port: "{{ mongo_port }}"
+    port: 3306
     timeout: 15
     connect_timeout: 3
     delay: 5

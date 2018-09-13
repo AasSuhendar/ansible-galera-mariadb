@@ -1,3 +1,5 @@
 ---
 # Default Value MongoDB ReplicaSet Name
 cluster_name: 'galera_cluster'
+
+mariadb_port: '3306'

@@ -34,7 +34,7 @@
     mariadb_version_major: "{{ mariadb_version_major | default(default_value, true) }}"
     mariadb_version_minor: "{{ mariadb_version_minor | default(default_value, true) }}"
     mariadb_admin_password: "{{ mariadb_admin_password | default(default_value, true) }}"
-    mariadb_file_owner: "mariadb"
+    mariadb_file_owner: "mysql"
     zfs_backend: "{{ zfs_backend if zfs_block_device is defined else 'false' | default(default_value, true) }}"
     zfs_block_wipe: "{{ zfs_block_wipe if zfs_block_device is defined else 'false' | default(default_value, true) }}"
     zfs_pool_name: "{{ zfs_pool_name | default(default_value, true) }}"

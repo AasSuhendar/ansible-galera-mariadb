@@ -1,0 +1,7 @@
+---
+- name: Remove Exsisting galera.cnf
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/mysql/conf.d/galera.cnf

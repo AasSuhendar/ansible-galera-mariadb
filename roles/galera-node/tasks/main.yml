@@ -3,7 +3,7 @@
 
 - include: mariadb_configs.yml
 
-# - include: mariadb_services.yml
+- include: mariadb_services.yml
 
 # - include: mongod_replicaset_init.yml
 

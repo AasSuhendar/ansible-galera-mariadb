@@ -3,7 +3,7 @@
 
 - include: mariadb_services.yml
 
-# - include: mongo_files.yml
+- include: mariadb_configs.yml
 
 # - include: mongo_keys.yml
 
