@@ -15,6 +15,22 @@
   when:
     - mariadb_service_info.stdout.find("not-found") == -1
 
+- name: Get MySQLDB Node Service Info
+  shell: service mysql status | grep not-found || true
+  args:
+    warn: false
+  register: mysql_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Disable MySQLDB Node Service
+  service:
+    name: mysql
+    enabled: no
+    state: stopped
+  when:
+    - mysql_service_info.stdout.find("not-found") == -1
+
 # - name: Get MariaDB Router Service Info
 #   shell: service mongos status | grep not-found || true
 #   args:

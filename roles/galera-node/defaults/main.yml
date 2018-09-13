@@ -1,0 +1,3 @@
+---
+# Default Value MongoDB ReplicaSet Name
+cluster_name: 'galera_cluster'

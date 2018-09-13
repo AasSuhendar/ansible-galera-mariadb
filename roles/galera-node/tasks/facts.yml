@@ -1,0 +1,4 @@
+---
+- name: Set Host Facts
+  set_fact:
+    cluster_name: "{{ cluster_name | default(default_value, true) }}"

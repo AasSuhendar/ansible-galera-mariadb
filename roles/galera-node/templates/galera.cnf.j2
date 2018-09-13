@@ -1,0 +1,29 @@
+[mysqld]
+binlog_format=ROW
+default-storage-engine=innodb
+innodb_autoinc_lock_mode=2
+bind-address=0.0.0.0
+   
+# Galera Provider Configuration
+wsrep_on=ON
+wsrep_provider=/usr/lib/galera/libgalera_smm.so
+wsrep_provider_options="gcache.recover=yes; gcache.size=1024M; gcache.page_size=1024M"
+   
+# Galera Cluster Configuration
+wsrep_cluster_name="galera_cluster"
+# wsrep_cluster_address="gcomm://192.168.1.86,192.168.1.70,192.168.1.71"
+{% set mariadb_hosts = '' %}
+{% for mariadb_host in groups['nodes'] %}
+{%  if loop.last %}
+{%    set mariadb_hosts = mariadb_hosts + hostvars[mariadb_host].mariadb_ip %}
+wsrep_cluster_address: "gcomm://{{ mariadb_hosts }}"
+{%  else %}
+{%    set mariadb_hosts = mariadb_hosts + hostvars[mariadb_host].mariadb_ip + ',' %}
+{%  endif %}
+{% endfor %}
+# Galera Synchronization Configuration
+wsrep_sst_method=rsync
+   
+# Galera Node Configuration
+wsrep_node_address="{{ mariadb_ip }}"
+wsrep_node_name="Node1"

@@ -12,8 +12,8 @@
 # - include: mongo_dirs_parents.yml
 
 - include: mariadb_packages.yml
-  # when:
-  #   - full_uninstall
+  when:
+    - full_uninstall
 
 # - include: mongo_users.yml
 #   when:
