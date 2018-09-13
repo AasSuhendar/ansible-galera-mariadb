@@ -7,7 +7,7 @@
     - service_init_status.stat.islnk
 
 - name: Get MariaDB Node Service Info
-  shell: service mysql status | grep not-found || true
+  shell: service mariadb status | grep not-found || true
   args:
     warn: false
   register: mariadb_service_info
@@ -16,28 +16,12 @@
 
 - name: Debug service
   debug: 
-    msg: "This is debug from service : {{ service_init_status }}"
+    msg: "This is debug from service : {{ mariadb_service_info }}"
 
 - name: Disable MariaDB Node Service
   service:
-    name: mysql
+    name: mariadb
     enabled: no
     state: stopped
   when:
     - mariadb_service_info.stdout.find("not-found") == -1
-
-# - name: Get MariaDB Router Service Info
-#   shell: service mongos status | grep not-found || true
-#   args:
-#     warn: false
-#   register: mongos_service_info
-#   when:
-#     - service_init_status.stat.exists
-
-# - name: Disable MariaDB Router Service
-#   service:
-#     name: mongos
-#     enabled: no
-#     state: stopped
-#   when:
-#     - mongos_service_info.stdout.find("not-found") == -1

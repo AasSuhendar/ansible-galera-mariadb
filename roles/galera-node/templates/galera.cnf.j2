@@ -15,7 +15,7 @@ wsrep_cluster_name="galera_cluster"
 {% for mariadb_host in groups['nodes'] %}
 {%  if loop.last %}
 {%    set mariadb_hosts = mariadb_hosts + hostvars[mariadb_host].mariadb_ip %}
-wsrep_cluster_address: "gcomm://{{ mariadb_hosts }}"
+wsrep_cluster_address="gcomm://{{ mariadb_hosts }}"
 {%  else %}
 {%    set mariadb_hosts = mariadb_hosts + hostvars[mariadb_host].mariadb_ip + ',' %}
 {%  endif %}

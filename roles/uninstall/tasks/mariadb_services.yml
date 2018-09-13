@@ -1,6 +1,6 @@
 ---
 - name: Get MariaDB Node Service Info
-  shell: service mariadb status | grep not-found || true
+  shell: service mysql status | grep not-found || true
   args:
     warn: false
   register: mariadb_service_info
@@ -9,27 +9,27 @@
 
 - name: Disable MariaDB Node Service
   service:
-    name: mariadb
+    name: mysql
     enabled: no
     state: stopped
   when:
     - mariadb_service_info.stdout.find("not-found") == -1
 
-- name: Get MySQLDB Node Service Info
-  shell: service mysql status | grep not-found || true
-  args:
-    warn: false
-  register: mysql_service_info
-  when:
-    - service_init_status.stat.exists
+# - name: Get MySQLDB Node Service Info
+#   shell: service mysql status | grep not-found || true
+#   args:
+#     warn: false
+#   register: mysql_service_info
+#   when:
+#     - service_init_status.stat.exists
 
-- name: Disable MySQLDB Node Service
-  service:
-    name: mysql
-    enabled: no
-    state: stopped
-  when:
-    - mysql_service_info.stdout.find("not-found") == -1
+# - name: Disable MySQLDB Node Service
+#   service:
+#     name: mysql
+#     enabled: no
+#     state: stopped
+#   when:
+#     - mysql_service_info.stdout.find("not-found") == -1
 
 # - name: Get MariaDB Router Service Info
 #   shell: service mongos status | grep not-found || true
@@ -63,9 +63,9 @@
 #     - service_init_status.stat.islnk is defined
 #     - service_init_status.stat.islnk
 
-- name: Reload MariaDB Service
-  systemd:
-    daemon_reload: yes
-  when:
-    - service_init_status.stat.islnk is defined
-    - service_init_status.stat.islnk
+# - name: Reload MariaDB Service
+#   systemd:
+#     daemon_reload: yes
+#   when:
+#     - service_init_status.stat.islnk is defined
+#     - service_init_status.stat.islnk

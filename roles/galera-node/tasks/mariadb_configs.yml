@@ -7,7 +7,25 @@
     group: "{{ mariadb_file_owner }}"
     mode: 0644
 
-- name: Intiate MariaDB Galera Node Superuser
+- name: Intiate MariaDB Galera - Boostraping
   shell: galera_new_cluster
   when:
     - primary
+
+# - name: Wait for the cluster running and bootstrapped.
+#   command: mysql --silent --skip-column-names -e 'SHOW STATUS LIKE "wsrep_cluster_size"'
+#   register: galera_check_wait
+#   until: galera_check_wait | success
+#   run_once: True
+#   when:
+#     - primary
+
+# - name: Wait For MariaDB Node Service
+#   wait_for:
+#     port: 3306
+#     timeout: 25
+#     connect_timeout: 3
+#     delay: 5
+#     state: present
+#   when:
+#     - primary

@@ -6,22 +6,30 @@
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
+- name: Debug service
+  debug: 
+    msg: "This is debug from service init status: {{ service_init_status}}"
+
 - name: Get MariaDB Node Service Info
-  shell: service mysql status | grep not-found || true
+  shell: service mariadb status | grep not-found || true
   args:
     warn: false
-  register: mysql_service_info
+  register: mariadb_service_info
   when:
     - service_init_status.stat.exists
 
+- name: Debug service
+  debug: 
+    msg: "This is debug from get service : {{ mariadb_service_info }}"
+
 - name: Enable MariaDB Node Service
   service:
-    name: mysql
+    name: mariadb
     enabled: yes
     state: restarted
   when:
-    - primary == 'false'
-    - mysql_service_info.stdout.find("not-found") == -1
+    - primary != 'true'
+    # - mariadb_service_info.stdout.find("not-found") == -1
 
 - name: Wait For MariaDB Node Service
   wait_for:
@@ -30,3 +38,5 @@
     connect_timeout: 3
     delay: 5
     state: present
+  when:
+    - primary != true
