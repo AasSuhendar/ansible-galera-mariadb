@@ -16,6 +16,20 @@
   when:
     - mariadb_distribution == 'mariadb-server'
 
+- name: mysql_root_pw | setting
+  debconf:
+    name: "mariadb-server"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "password"
+  changed_when: false
+  no_log: true
+  with_items:
+    - question: 'mysql-server/root_password'
+      value: '{{ mariadb_admin_password }}'
+    - question: 'mysql-server/root_password_again'
+      value: '{{ mariadb_admin_password }}'
+
 - name: Install MariaDB Packages (MariaDB)
   apt:
     name: "{{ item }}"
@@ -27,5 +41,6 @@
   with_items:
     - mariadb-server
     - rsync
+    - python-mysqldb
   when:
     - mariadb_distribution == 'mariadb-server'

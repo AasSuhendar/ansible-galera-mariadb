@@ -10,8 +10,8 @@
   with_items:
     - python-pip
 
-- name: Install PyMongo Packages from Python PIP
-  pip:
-    name: pymongo
-    state: latest
-    use_mirrors: no
+# - name: Install PyMongo Packages from Python PIP
+#   pip:
+#     name: pymongo
+#     state: latest
+#     use_mirrors: no

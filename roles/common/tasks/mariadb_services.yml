@@ -16,12 +16,12 @@
 
 - name: Debug service
   debug: 
-    msg: "This is debug from service : {{ mariadb_service_info }}"
+    msg: "Info status service : {{ mariadb_service_info }}"
 
-- name: Disable MariaDB Node Service
-  service:
-    name: mariadb
-    enabled: no
-    state: stopped
-  when:
-    - mariadb_service_info.stdout.find("not-found") == -1
+# - name: Disable MariaDB Node Service
+#   service:
+#     name: mariadb`
+#     enabled: no
+#     state: stopped
+#   when:
+#     - mariadb_service_info.stdout.find("not-found") == -1

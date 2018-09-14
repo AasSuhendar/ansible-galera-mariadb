@@ -4,11 +4,13 @@
     path: "{{ item }}"
     state: absent
   with_items:
-    - /etc/mysql/conf.d/galera.cnf
+    - /etc/mysql/
+  when:
+    - full_uninstall
 
-# - name: Remove DB
-#   file:
-#     path: "{{ item }}"
-#     state: absent
-#   with_items:
-#     - /var/lib/mysql
+- name: Remove DB
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /var/lib/mysql/
