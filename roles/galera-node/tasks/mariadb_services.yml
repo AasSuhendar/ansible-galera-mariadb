@@ -18,10 +18,6 @@
   when:
     - service_init_status.stat.exists
 
-- name: Debug service
-  debug: 
-    msg: "This is debug from get service : {{ mariadb_service_info }}"
-
 - name: Enable MariaDB Node Service
   service:
     name: mariadb

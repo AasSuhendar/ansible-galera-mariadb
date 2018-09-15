@@ -24,6 +24,10 @@
   when:
     - inventory_hostname in groups['nodes']
 
+- include: mariadb_secure_installation.yml
+  when:
+    - inventory_hostname in groups['nodes']
+
 - include: mariadb_services.yml
   when:
     - inventory_hostname in groups['nodes']

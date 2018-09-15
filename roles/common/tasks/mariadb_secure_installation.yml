@@ -1,0 +1,59 @@
+---
+
+- name: Generate MariaDB configuration .my.cnf
+  template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: 0600
+
+# - name: configure_root_access | updating root passwords
+#   mysql_user:
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mariadb_admin_password }}"
+#   with_items:
+#     - '{{ ansible_hostname }}'
+#     - '127.0.0.1'
+#     - '::1'
+#     - localhost
+
+# - name: Set root Password
+#   mysql_user: 
+#     login_password=: "{{ mariadb_admin_password }}"
+#     check_implicit_admin: yes 
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mariadb_admin_password }}"
+#     state: present 
+#   with_items:
+#     - localhost
+#     - "127.0.0.1"
+#     - ""::1"
+
+- name: Set root Password
+  mysql_user: 
+    login_user: root
+    login_password: "{{ mariadb_admin_password }}"
+    check_implicit_admin: yes
+    name: root
+    password: "{{ mariadb_admin_password }}"
+    # priv: "*.*:ALL,GRANT"
+    host: "{{ item }}"
+  with_items:
+    - "127.0.0.1"
+    - "::1"
+    - localhost
+    - "{{ ansible_hostname }}"
+
+- name: delete anonymous MySQL server user
+  mysql_user: 
+    user: ""
+    host: "{{ item }}"
+    state: "absent"
+  with_items:
+    - "{{ ansible_hostname }}"
+    - "127.0.0.1"
+    - "::1"
+    - localhost

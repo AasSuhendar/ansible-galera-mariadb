@@ -6,6 +6,13 @@
   with_items:
     - /etc/mysql/conf.d/galera.cnf
 
+- name: Remove Exsisting my.cnf
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /root/.my.cnf
+
 - name: Remove DB
   file:
     path: "{{ item }}"
