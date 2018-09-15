@@ -29,14 +29,14 @@
     state: restarted
   when:
     - inventory_hostname != groups['nodes'] | first
-    # - mariadb_service_info.stdout.find("not-found") == -1
+    - mariadb_service_info.stdout.find("not-found") == -1
 
-# - name: Wait For MariaDB Node Service
-#   wait_for:
-#     port: 3306
-#     timeout: 15
-#     connect_timeout: 3
-#     delay: 5
-#     state: present
-#   when:
-#     - primary != true
+- name: Wait For MariaDB Node Service
+  wait_for:
+    port: 3306
+    timeout: 30
+    connect_timeout: 5
+    delay: 5
+    state: present
+  when:
+    - inventory_hostname != groups['nodes'] | first

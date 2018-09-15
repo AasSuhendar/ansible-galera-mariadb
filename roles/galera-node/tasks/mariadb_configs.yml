@@ -7,14 +7,6 @@
     group: "{{ mariadb_file_owner }}"
     mode: 0644
 
-- name: Generate configuration my.cnf
-  template:
-    src: my.cnf.j2
-    dest: /root/.my.cnf
-    owner: root
-    group: root
-    mode: 0644
-
 # - name: configure_root_access | updating root passwords
 #   mysql_user:
 #     name: root
@@ -55,51 +47,43 @@
   shell: ufw status
   register: ufw_status_info
 
-- name: Reload MariaDB Service
-  systemd:
-    daemon_reload: yes
-  when:
-    - service_init_status.stat.islnk is defined
-    - service_init_status.stat.islnk
+# - name: Reload MariaDB Service
+#   systemd:
+#     daemon_reload: yes
+#   when:
+#     - service_init_status.stat.islnk is defined
+#     - service_init_status.stat.islnk
 
-- name: Get MariaDB Node Service Info
-  shell: service mariadb status | grep not-found || true
-  args:
-    warn: false
-  register: mariadb_service_info
-  when:
-    - service_init_status.stat.exists
+# - name: Get MariaDB Node Service Info
+#   shell: service mariadb status | grep not-found || true
+#   args:
+#     warn: false
+#   register: mariadb_service_info
+#   when:
+#     - service_init_status.stat.exists
 
-- name: Debug service
-  debug: 
-    msg: "Info status service : {{ mariadb_service_info }}"
+# - name: Debug service
+#   debug: 
+#     msg: "Info status service : {{ mariadb_service_info }}"
 
-- name: Disable MariaDB Node Service
-  service:
-    name: mariadb
-    enabled: no
-    state: stopped
-  when:
-    - mariadb_service_info.stdout.find("not-found") == -1
+# - name: Disable MariaDB Node Service
+#   service:
+#     name: mariadb
+#     enabled: no
+#     state: stopped
+#   when:
+#     - mariadb_service_info.stdout.find("not-found") == -1
 
 - name: Intiate MariaDB Galera - Boostraping
   shell: galera_new_cluster
   when:
     - primary
 
-# - name: Wait for the cluster running and bootstrapped.
-#   command: mysql --silent --skip-column-names -e 'SHOW STATUS LIKE "wsrep_cluster_size"'
-#   register: galera_check_wait
-#   until: galera_check_wait | success
-#   run_once: True
-#   when:
-#     - primary
-
 - name: Wait For MariaDB Node Service
   wait_for:
     port: 3306
-    timeout: 25
-    connect_timeout: 3
+    timeout: 30
+    connect_timeout: 5
     delay: 5
     state: present
   when:

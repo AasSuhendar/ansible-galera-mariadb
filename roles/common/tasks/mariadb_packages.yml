@@ -16,7 +16,7 @@
   when:
     - mariadb_distribution == 'mariadb-server'
 
-- name: mysql_root_pw | setting
+- name: Setting mariadb server root pass before installing
   debconf:
     name: "mariadb-server"
     question: "{{ item.question }}"
@@ -44,3 +44,14 @@
     - python-mysqldb
   when:
     - mariadb_distribution == 'mariadb-server'
+
+# - name: configure_root_access | updating root passwords
+#   mysql_user:
+#     name: root
+#     host: "{{ item }}"
+#     password: "{{ mariadb_admin_password }}"
+#   with_items:
+#     - '{{ ansible_hostname }}'
+#     - '127.0.0.1'
+#     - '::1'
+#     - localhost

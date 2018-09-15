@@ -14,14 +14,10 @@
   when:
     - service_init_status.stat.exists
 
-- name: Debug service
-  debug: 
-    msg: "Info status service : {{ mariadb_service_info }}"
-
-# - name: Disable MariaDB Node Service
-#   service:
-#     name: mariadb`
-#     enabled: no
-#     state: stopped
-#   when:
-#     - mariadb_service_info.stdout.find("not-found") == -1
+- name: Disable MariaDB Node Service
+  service:
+    name: mariadb
+    enabled: no
+    state: stopped
+  when:
+    - mariadb_service_info.stdout.find("not-found") == -1
