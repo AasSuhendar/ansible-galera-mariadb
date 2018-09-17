@@ -32,6 +32,14 @@
   when:
     - inventory_hostname in groups['nodes']
 
+- include: haproxy_packages.yml
+  when:
+    - inventory_hostname in groups['haproxy']
+
+- include: haproxy_services.yml
+  when:
+    - inventory_hostname in groups['haproxy']
+
 # - include: mongo_files.yml
 
 # - include: mongo_dirs_parents.yml

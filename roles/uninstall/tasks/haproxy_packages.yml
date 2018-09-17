@@ -1,0 +1,12 @@
+---
+- name: Uninstall HAProxy Packages (HAProxy)
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    autoremove: yes
+    autoclean: yes
+    purge: yes
+    state: absent
+  with_items:
+    - haproxy
+    - mariadb-client

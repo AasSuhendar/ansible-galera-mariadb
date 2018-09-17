@@ -1,0 +1,16 @@
+# Galera Cluster Frontend configuration
+frontend galera_cluster_frontend
+    bind {{ loadbalace_ip }}:{{ mariadb_port }}
+    mode tcp
+    option tcplog
+    default_backend galera_cluster_backend
+
+# Galera Cluster Backend configuration
+backend galera_cluster_backend
+    mode tcp
+    option tcpka
+    balance source
+    option mysql-check user haproxy
+{% for mariadb_host in groups['nodes'] %}
+    server {{ hostvars[mariadb_host].ansible_hostname }} {{ hostvars[mariadb_host].mariadb_ip }}:3306  check weight 1
+{% endfor %}

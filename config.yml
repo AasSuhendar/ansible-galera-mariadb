@@ -8,3 +8,8 @@
   any_errors_fatal: true
   roles:
   - role: galera-node
+
+- hosts: haproxy
+  any_errors_fatal: true
+  roles:
+  - role: galera-lb

@@ -1,0 +1,5 @@
+---
+- name: Set Host Facts
+  set_fact:
+    user_check: "{{ user_check | default(default_value, true) }}"
+    loadbalace_ip: "{{ loadbalace_ip | default(defaul_value, true) }}"

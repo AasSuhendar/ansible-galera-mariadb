@@ -32,3 +32,5 @@ zfs_dataset_wipe: 'false'
 # Default Value MongoDB Primary Node Flag
 primary: 'false'
 
+mariadb_ip: "{{ ansible_enp0s8.ipv4.address }}"
+

@@ -1,6 +1,6 @@
 ---
 - name: Get MariaDB Node Service Info
-  shell: service mysql status | grep not-found || true
+  shell: service mariadb status | grep not-found || true
   args:
     warn: false
   register: mariadb_service_info

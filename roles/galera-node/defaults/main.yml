@@ -1,5 +1,5 @@
 ---
-# Default Value MongoDB ReplicaSet Name
+# Default Value Galera Nodes
 cluster_name: 'galera_cluster'
 
 mariadb_port: '3306'

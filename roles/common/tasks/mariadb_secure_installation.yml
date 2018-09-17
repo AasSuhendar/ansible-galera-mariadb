@@ -39,13 +39,25 @@
     check_implicit_admin: yes
     name: root
     password: "{{ mariadb_admin_password }}"
-    # priv: "*.*:ALL,GRANT"
+    priv: "*.*:ALL,GRANT"
     host: "{{ item }}"
   with_items:
     - "127.0.0.1"
     - "::1"
     - localhost
+    - "%"
     - "{{ ansible_hostname }}"
+
+- name: Create user for haproxy check
+  mysql_user: 
+    login_user: root
+    login_password: "{{ mariadb_admin_password }}"
+    check_implicit_admin: yes
+    name: haproxy
+    host: "{{ item }}"
+  with_items: "{{ groups.haproxy }}"
+  when: 
+    - primary
 
 - name: delete anonymous MySQL server user
   mysql_user: 

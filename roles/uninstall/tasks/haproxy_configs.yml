@@ -1,0 +1,14 @@
+---
+- name: Remove Exsisting haproxy.cfg
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/haproxy/haproxy.cfg
+
+- name: Remove address of all hosts galera node
+  lineinfile:
+    dest: /etc/hosts
+    regexp: "{{ hostvars[item].mariadb_ip }} {{ hostvars[item].ansible_hostname }} "
+    state: absent
+  with_items: "{{ groups.nodes }}"

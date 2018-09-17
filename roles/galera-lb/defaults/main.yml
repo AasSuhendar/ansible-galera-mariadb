@@ -1,0 +1,7 @@
+---
+# Default Value Loadbalance Nodes
+user_check: 'haproxy'
+
+mariadb_port: '3306'
+
+loadbalace_ip: "{{ ansible_enp0s8.ipv4.address }}"

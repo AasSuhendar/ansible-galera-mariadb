@@ -38,6 +38,7 @@
     zfs_pool_name: "{{ zfs_pool_name | default(default_value, true) }}"
     zfs_pool_wipe: "{{ zfs_pool_wipe | default(default_value, true) }}"
     primary: "{{ primary | default(default_value, true) }}"
+    mariadb_ip: "{{ mariadb_ip | default(defaul_value, true) }}"
 
 - name: Set Facts for MongoDB User (MongoDB-ORG)
   set_fact:

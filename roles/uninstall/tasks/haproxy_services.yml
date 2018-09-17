@@ -1,0 +1,32 @@
+---
+- name: Get HAProxy Node Service Info
+  shell: service haproxy status | grep not-found || true
+  args:
+    warn: false
+  register: haproxy_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Disable HAProxy Node Service
+  service:
+    name: haproxy
+    enabled: no
+    state: stopped
+  when:
+    - haproxy_service_info.stdout.find("not-found") == -1
+
+- name: Get MariaDB Client Node Service Info
+  shell: service mariadb status | grep not-found || true
+  args:
+    warn: false
+  register: mariadb_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Disable MariaDB Client Node Service
+  service:
+    name: mariadb 
+    enabled: no
+    state: stopped
+  when:
+    - mariadb_service_info.stdout.find("not-found") == -1

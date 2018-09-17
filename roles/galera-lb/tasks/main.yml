@@ -1,0 +1,7 @@
+---
+- include: facts.yml
+
+- include: haproxy_configs.yml
+
+- include: haproxy_services.yml
+

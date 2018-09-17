@@ -7,17 +7,6 @@
     group: "{{ mariadb_file_owner }}"
     mode: 0644
 
-# - name: configure_root_access | updating root passwords
-#   mysql_user:
-#     name: root
-#     host: "{{ item }}"
-#     password: "{{ mariadb_admin_password }}"
-#   with_items:
-#     - '{{ ansible_hostname }}'
-#     - '127.0.0.1'
-#     - '::1'
-#     - localhost
-
 - name: Allow SSH in UFW
   ufw:
     rule: allow
@@ -47,33 +36,6 @@
   shell: ufw status
   register: ufw_status_info
 
-# - name: Reload MariaDB Service
-#   systemd:
-#     daemon_reload: yes
-#   when:
-#     - service_init_status.stat.islnk is defined
-#     - service_init_status.stat.islnk
-
-# - name: Get MariaDB Node Service Info
-#   shell: service mariadb status | grep not-found || true
-#   args:
-#     warn: false
-#   register: mariadb_service_info
-#   when:
-#     - service_init_status.stat.exists
-
-# - name: Debug service
-#   debug: 
-#     msg: "Info status service : {{ mariadb_service_info }}"
-
-# - name: Disable MariaDB Node Service
-#   service:
-#     name: mariadb
-#     enabled: no
-#     state: stopped
-#   when:
-#     - mariadb_service_info.stdout.find("not-found") == -1
-
 - name: Intiate MariaDB Galera - Boostraping
   shell: galera_new_cluster
   when:
@@ -81,7 +43,7 @@
 
 - name: Wait For MariaDB Node Service
   wait_for:
-    port: 3306
+    port: "{{ mariadb_port }}"
     timeout: 30
     connect_timeout: 5
     delay: 5

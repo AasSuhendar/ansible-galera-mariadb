@@ -1,0 +1,12 @@
+---
+- name: Install HAProxy Packages (HAProxy)
+  apt:
+    name: "{{ item }}"
+    force_apt_get: yes
+    update_cache: yes
+    autoremove: yes
+    autoclean: yes
+    state: present
+  with_items:
+    - haproxy
+    - mariadb-client

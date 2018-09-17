@@ -1,0 +1,50 @@
+---
+- name: Reload HAProxy Service
+  systemd:
+    daemon_reload: yes
+  when:
+    - service_init_status.stat.islnk is defined
+    - service_init_status.stat.islnk
+
+- name: Debug service
+  debug: 
+    msg: "This is debug from service init status: {{ service_init_status}}"
+
+- name: Get HAProxy Node Service Info
+  shell: service haproxy status | grep not-found || true
+  args:
+    warn: false
+  register: haproxy_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Enable HAProxy Node Service
+  service:
+    name: haproxy
+    enabled: yes
+    state: restarted
+  when:
+    - haproxy_service_info.stdout.find("not-found") == -1
+
+- name: Reload MariaDB Client Service
+  systemd:
+    daemon_reload: yes
+  when:
+    - service_init_status.stat.islnk is defined
+    - service_init_status.stat.islnk
+
+- name: Get MariaDB Client Node Service Info
+  shell: service mariadb status | grep not-found || true
+  args:
+    warn: false
+  register: mariadb_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Enable MariaDB Client Node Service
+  service:
+    name: mariadb
+    enabled: yes
+    state: restarted
+  when:
+    - mariadb_service_info.stdout.find("not-found") == -1
