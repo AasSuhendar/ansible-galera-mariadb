@@ -1,5 +1,5 @@
 ---
-- name: Get HAProxy Node Service Info
+- name: Get HAProxy Node Service Info in Load Balancer Node
   shell: service haproxy status | grep not-found || true
   args:
     warn: false
@@ -7,7 +7,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Disable HAProxy Node Service
+- name: Disable HAProxy Node Service in Load Balancer Node
   service:
     name: haproxy
     enabled: no
@@ -15,7 +15,7 @@
   when:
     - haproxy_service_info.stdout.find("not-found") == -1
 
-- name: Get MariaDB Client Node Service Info
+- name: Get MariaDB Client Node Service Info in Load Balancer Node
   shell: service mariadb status | grep not-found || true
   args:
     warn: false
@@ -23,7 +23,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Disable MariaDB Client Node Service
+- name: Disable MariaDB Client Node Service in Load Balancer Node
   service:
     name: mariadb 
     enabled: no

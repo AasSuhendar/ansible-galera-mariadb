@@ -1,5 +1,5 @@
 ---
-- name: Install MariaDB Keyring (MariaDB)
+- name: Install MariaDB Keyring (MariaDB) in MariaDB Galera Node
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: '0xF1656F24C74CD1D8'
@@ -7,30 +7,17 @@
   when:
     - mariadb_distribution == 'mariadb-server'
 
-- name: Install MariaDB Repository (MariaDB)
+- name: Install MariaDB Repository (MariaDB) in MariaDB Galera Node
   lineinfile:
-    dest: "/etc/apt/sources.list"
+    dest: "/etc/apt/sources.list.d/mariadb-server-{{ mariadb_version_major }}.{{ mariadb_version_minor }}.list"
+    # dest: "/etc/apt/sources.list"
     line: "deb [arch=amd64,arm64,i386,ppc64el] http://kartolo.sby.datautama.net.id/mariadb/repo/{{ mariadb_version_major }}.{{ mariadb_version_minor }}/ubuntu {{ ansible_distribution_release }} main"
     create: yes
     state: present
   when:
     - mariadb_distribution == 'mariadb-server'
 
-# - name: Setting mariadb server root pass before installing
-#   debconf:
-#     name: "mariadb-server"
-#     question: "{{ item.question }}"
-#     value: "{{ item.value }}"
-#     vtype: "password"
-#   changed_when: false
-#   no_log: true
-#   with_items:
-#     - question: 'mysql-server/root_password'
-#       value: '{{ mariadb_admin_password }}'
-#     - question: 'mysql-server/root_password_again'
-#       value: '{{ mariadb_admin_password }}'
-
-- name: Install MariaDB Packages (MariaDB)
+- name: Install MariaDB Packages (MariaDB) in MariaDB Galera Node
   apt:
     name: "{{ item }}"
     force_apt_get: yes

@@ -1,5 +1,5 @@
 ---
-- name: Mount ZFS Dataset to MongoDB Directory
+- name: Mount ZFS Dataset to MariaDB Directory
   mount:
     path: /var/lib/mariadb
     src: "/dev/zvol/{{ zfs_pool_name }}/mariadb"

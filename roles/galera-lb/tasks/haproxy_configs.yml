@@ -1,5 +1,5 @@
 ---
-- name: Generate HAProxy configuration haproxy.cfg
+- name: Generate HAProxy Configuration haproxy.cfg in Load Balancer Node
   template:
     src: haproxy.cfg.j2
     dest: /etc/haproxy/haproxy.cfg
@@ -7,24 +7,24 @@
     group: root
     mode: 0644
 
-- name: Add IP address of all hosts galera node to loadbalace node
+- name: Add IP address of all hosts galera node in Load Balancer Node
   lineinfile:
     dest: /etc/hosts
     line: "{{ hostvars[item].mariadb_ip }} {{ hostvars[item].ansible_hostname }} "
     state: present
   with_items: "{{ groups.nodes }}"
 
-- name: Allow SSH in UFW
+- name: Allow SSH in UFW in Load Balancer Node
   ufw:
     rule: allow
     port: 22
     proto: tcp
   
-- name: Allow port for MariaDB with TCP
+- name: Allow port for MariaDB with TCP in Load Balancer Node
   ufw:
     rule: allow
     port: "{{ item }}"
     proto: tcp
   with_items:
-    - 3306
+    - "{{ mariadb_port }}"
 

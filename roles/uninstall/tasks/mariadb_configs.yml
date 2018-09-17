@@ -1,23 +1,21 @@
 ---
-- name: Remove Exsisting galera.cnf
+- name: Remove Exsisting galera.cnf in MariaDB Galera Node
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /etc/mysql/conf.d/galera.cnf
 
-- name: Remove Exsisting my.cnf
+- name: Remove Exsisting my.cnf in MariaDB Galera Node
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /root/.my.cnf
 
-- name: Remove DB
+- name: Remove all file MariaDB in MariaDB Galera Node
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /var/lib/mysql/
-  when: 
-    - full_uninstall

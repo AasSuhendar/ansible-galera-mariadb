@@ -39,11 +39,3 @@
 - include: haproxy_services.yml
   when:
     - inventory_hostname in groups['haproxy']
-
-# - include: mongo_files.yml
-
-# - include: mongo_dirs_parents.yml
-
-# - include: mongo_dirs_childs.yml
-
-# - include: mongo_keys.yml

@@ -1,12 +1,12 @@
 ---
-- name: Reload MariaDB Service
+- name: Reload MariaDB Service in MariaDB Galera Node
   systemd:
     daemon_reload: yes
   when:
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
-- name: Get MariaDB Node Service Info
+- name: Get MariaDB Node Service Info in MariaDB Galera Node
   shell: service mariadb status | grep not-found || true
   args:
     warn: false
@@ -14,7 +14,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Disable MariaDB Node Service
+- name: Disable MariaDB Node Service in MariaDB Galera Node
   service:
     name: mariadb
     state: stopped

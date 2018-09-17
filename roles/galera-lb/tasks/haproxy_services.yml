@@ -1,5 +1,5 @@
 ---
-- name: Reload HAProxy Service
+- name: Reload HAProxy Service in Load Balancer Node
   systemd:
     daemon_reload: yes
   when:
@@ -10,7 +10,7 @@
   debug: 
     msg: "This is debug from service init status: {{ service_init_status}}"
 
-- name: Get HAProxy Node Service Info
+- name: Get HAProxy Node Service Info in Load Balancer Node
   shell: service haproxy status | grep not-found || true
   args:
     warn: false
@@ -18,7 +18,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Enable HAProxy Node Service
+- name: Enable HAProxy Node Service in Load Balancer Node
   service:
     name: haproxy
     enabled: yes
@@ -26,14 +26,14 @@
   when:
     - haproxy_service_info.stdout.find("not-found") == -1
 
-- name: Reload MariaDB Client Service
+- name: Reload MariaDB Client Service in Load Balancer Node
   systemd:
     daemon_reload: yes
   when:
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
-- name: Get MariaDB Client Node Service Info
+- name: Get MariaDB Client Node Service Info in Load Balancer Node
   shell: service mariadb status | grep not-found || true
   args:
     warn: false
@@ -41,7 +41,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Enable MariaDB Client Node Service
+- name: Enable MariaDB Client Node Service in Load Balancer Node
   service:
     name: mariadb
     enabled: yes

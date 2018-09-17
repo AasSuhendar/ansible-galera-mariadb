@@ -40,7 +40,7 @@
     primary: "{{ primary | default(default_value, true) }}"
     mariadb_ip: "{{ mariadb_ip | default(defaul_value, true) }}"
 
-- name: Set Facts for MongoDB User (MongoDB-ORG)
+- name: Set Facts for MariaDB User
   set_fact:
     mariadb_file_owner: "mariadb"
   when:

@@ -1,5 +1,5 @@
 ---
-- name: Uninstall HAProxy Packages (HAProxy)
+- name: Uninstall HAProxy Packages (HAProxy) in Load Balancer Node
   apt:
     name: "{{ item }}"
     force_apt_get: yes

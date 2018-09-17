@@ -1,12 +1,12 @@
 ---
-- name: Remove Exsisting haproxy.cfg
+- name: Remove Exsisting haproxy.cfg in Load Balancer Node
   file:
     path: "{{ item }}"
     state: absent
   with_items:
     - /etc/haproxy/haproxy.cfg
 
-- name: Remove address of all hosts galera node
+- name: Remove IP Address of all hosts MariaDB Galera Node in Load Balancer Node
   lineinfile:
     dest: /etc/hosts
     regexp: "{{ hostvars[item].mariadb_ip }} {{ hostvars[item].ansible_hostname }} "

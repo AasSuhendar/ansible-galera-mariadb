@@ -1,5 +1,5 @@
 ---
-- name: Install HAProxy Packages (HAProxy)
+- name: Install HAProxy and MariaDB Client Packages in Load Balancer
   apt:
     name: "{{ item }}"
     force_apt_get: yes

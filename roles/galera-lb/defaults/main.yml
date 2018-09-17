@@ -1,7 +1,9 @@
 ---
-# Default Value Loadbalance Nodes
+# Default Value User Check in HAProxy
 user_check: 'haproxy'
 
+# Default Value for Port MariaDB
 mariadb_port: '3306'
 
-loadbalace_ip: "{{ ansible_enp0s8.ipv4.address }}"
+# Default Value for Host IP Load Balancer
+loadbalace_ip: "{{ ansible_default_ipv4.address }}"

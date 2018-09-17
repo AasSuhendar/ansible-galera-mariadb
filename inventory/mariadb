@@ -3,10 +3,10 @@ mariadb_distribution=mariadb-server
 mariadb_admin_password=admin
 
 [haproxy]
-192.168.103.122
-192.168.103.123
+192.168.103.122 loadbalace_ip=192.168.103.122
+192.168.103.123 loadbalace_ip=192.168.103.123
 
 [nodes]
-192.168.103.124 primary=true
-192.168.103.125
-192.168.103.126
+192.168.103.124 mariadb_ip=192.168.103.124 primary=true
+192.168.103.125 mariadb_ip=192.168.103.124
+192.168.103.126 mariadb_ip=192.168.103.126

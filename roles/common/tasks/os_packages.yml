@@ -16,7 +16,7 @@
   poll: 10
   when: os_upgrade_info.changed
 
-- name: Install Required Packages
+- name: Install Required Packages in All Nodes
   apt:
     name: "{{ item }}"
     force_apt_get: yes

@@ -1,5 +1,5 @@
 ---
-- name: Generate MariaDB configuration galera.cnf
+- name: Generate MariaDB Configuration galera.cnf in MariaDB Galera Node
   template:
     src: galera.cnf.j2
     dest: /etc/mysql/conf.d/galera.cnf
@@ -7,13 +7,13 @@
     group: "{{ mariadb_file_owner }}"
     mode: 0644
 
-- name: Allow SSH in UFW
+- name: Allow SSH in UFW in MariaDB Galera Node
   ufw:
     rule: allow
     port: 22
     proto: tcp
   
-- name: Allow port for MariaDB with TCP
+- name: Allow port for MariaDB with TCP in MariaDB Galera Node
   ufw:
     rule: allow
     port: "{{ item }}"
@@ -24,7 +24,7 @@
     - 4567
     - 4568
 
-- name: Allow port for MariaDB with UDP
+- name: Allow port for MariaDB with UDP in MariaDB Galera Node
   ufw:
     rule: allow
     port: "{{ item }}"
@@ -32,16 +32,16 @@
   with_items:
     - 4567
 
-- name: Status UFW
+- name: Status UFW in MariaDB Galera Node
   shell: ufw status
   register: ufw_status_info
 
-- name: Intiate MariaDB Galera - Boostraping
+- name: Intiate/Boostraping cluster MariaDB Galera in MariaDB Galera Node
   shell: galera_new_cluster
   when:
     - primary
 
-- name: Wait For MariaDB Node Service
+- name: Wait For MariaDB Node Service in MariaDB Galera Node
   wait_for:
     port: "{{ mariadb_port }}"
     timeout: 30

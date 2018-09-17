@@ -1,0 +1,5 @@
+---
+- name: Unmount ZFS Dataset from MongoDB Directory
+  mount:
+    path: /var/lib/mariadb
+    state: absent

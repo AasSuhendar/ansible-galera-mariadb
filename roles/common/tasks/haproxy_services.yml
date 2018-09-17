@@ -1,12 +1,12 @@
 ---
-- name: Reload HAProxy Service
+- name: Reload HAProxy Service in Load Balancer
   systemd:
     daemon_reload: yes
   when:
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
-- name: Get HAProxy Node Service Info
+- name: Get HAProxy Node Service Info in Load Balancer
   shell: service haproxy status | grep not-found || true
   args:
     warn: false
@@ -14,9 +14,31 @@
   when:
     - service_init_status.stat.exists
 
-- name: Disable HAProxy Node Service
+- name: Disable HAProxy Node Service in Load Balancer
   service:
     name: haproxy
     state: stopped
   when:
     - haproxy_service_info.stdout.find("not-found") == -1
+
+- name: Reload MariaDB Client Service in Load Balancer
+  systemd:
+    daemon_reload: yes
+  when:
+    - service_init_status.stat.islnk is defined
+    - service_init_status.stat.islnk
+
+- name: Get MariaDB Client Node Service Info in Load Balancer
+  shell: service mariadb status | grep not-found || true
+  args:
+    warn: false
+  register: mariadb_service_info
+  when:
+    - service_init_status.stat.exists
+
+- name: Disable MariaDB Client Node Service in Load Balancer
+  service:
+    name: mariadb
+    state: stopped
+  when:
+    - mariadb_service_info.stdout.find("not-found") == -1

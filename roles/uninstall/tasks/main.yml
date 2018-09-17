@@ -26,15 +26,14 @@
   when:
     - inventory_hostname in groups['haproxy']
 
+- include: zfs_mounts.yml
+  when:
+    - full_uninstall
+    - zfs_backend
+    - inventory_hostname in groups['nodes']
 
-# - include: zfs_mounts.yml
-#   when:
-#     - full_uninstall
-#     - zfs_backend
-#     - inventory_hostname in groups['nodes']
-
-# - include: zfs_blocks.yml
-#   when:
-#     - full_uninstall
-#     - zfs_backend
-#     - inventory_hostname in groups['nodes']
+- include: zfs_blocks.yml
+  when:
+    - full_uninstall
+    - zfs_backend
+    - inventory_hostname in groups['nodes']

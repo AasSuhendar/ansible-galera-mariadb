@@ -1,16 +1,12 @@
 ---
-- name: Reload MariaDB Service
+- name: Reload MariaDB Service in MariaDB Galera Node
   systemd:
     daemon_reload: yes
   when:
     - service_init_status.stat.islnk is defined
     - service_init_status.stat.islnk
 
-- name: Debug service
-  debug: 
-    msg: "This is debug from service init status: {{ service_init_status}}"
-
-- name: Get MariaDB Node Service Info
+- name: Get MariaDB Node Service Info in MariaDB Galera Node
   shell: service mariadb status | grep not-found || true
   args:
     warn: false
@@ -18,7 +14,7 @@
   when:
     - service_init_status.stat.exists
 
-- name: Enable MariaDB Node Service
+- name: Enable MariaDB Node Service in MariaDB Galera Node
   service:
     name: mariadb
     enabled: yes
@@ -27,7 +23,7 @@
     - inventory_hostname != groups['nodes'] | first
     - mariadb_service_info.stdout.find("not-found") == -1
 
-- name: Wait For MariaDB Node Service
+- name: Wait For MariaDB Node Service in MariaDB Galera Node
   wait_for:
     port: "{{ mariadb_port }}"
     timeout: 30

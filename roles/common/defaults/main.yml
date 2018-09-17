@@ -1,6 +1,6 @@
 ---
 # Default Value for Host IP
-mariadb_ip: "{{ ansible_enp0s8.ipv4.address }}"
+mariadb_ip: "{{ ansible_default_ipv4.address }}"
 
 # Default Value for MongoDB Distribution
 mariadb_distribution: 'mariadb-server'
