@@ -8,8 +8,10 @@
     purge: yes
     state: absent
   with_items:
-    - rsync
     - mariadb-server
+    - mariadb-client
+    - rsync
+    - python-mysqldb
   when:
     - mariadb_distribution == 'mariadb-server'
 
